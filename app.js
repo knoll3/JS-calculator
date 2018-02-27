@@ -12,5 +12,6 @@ for (let i = 0; i < 20; i++ ) {
   let button = document.createElement('button');
   button.setAttribute('class', 'button');
   button.innerHTML = buttonLabels[i];
+  button.id = `button_${buttonLabels[i]}`
   document.getElementById('container').appendChild(button);
 }
