@@ -17,32 +17,6 @@ $(document).keydown(function(e) {
 
 // Function Definitions //
 
-function isKeyAllowed(key) {
-  var allowed = false;
-  var allowableKeys = ['1', '2', '3', '4', '5', '6', '7',
-                       '8', '9', '0', '.', 'Delete', 'Backspace', 
-                       '/', '*', '-', '+', 'Enter'];
-  for (let i = 0; i < allowableKeys.length; i++) {
-    if (key == allowableKeys[i]) {
-      allowed = true;
-    }
-  }                     
-  return allowed;
-}
-
-function operate(op, n1, n2) {
-  return eval(`${n1} ${op} ${n2}`);
-}
-
-function genButtonLabels() {
-  return ['C',  '',  '<-', '/',
-          '7',  '8',  '9', '*', 
-          '4',  '5',  '6', '-',
-          '1',  '2',  '3', '+',
-          '',   '0',  '.', '='];
-
-}
-
 function makeCalculator() {
   var buttonLabels = genButtonLabels();
   result = '';
@@ -56,20 +30,51 @@ function makeCalculator() {
     button.addEventListener('click', function() {
       onButtonPress(buttonLabels[i]);
     }); 
+    document.getElementById('bottomDisplay').innerHTML = 0;
   }
 }
 
+function isKeyAllowed(key) {
+  var allowed = false;
+  var allowableKeys = ['1', '2', '3', '4', '5', '6', '7',
+                       '8', '9', '0', '.', 'Delete', 'Backspace', 
+                       '/', '*', '-', '+', 'Enter'];
+  for (let i = 0; i < allowableKeys.length; i++) {
+    if (key == allowableKeys[i]) {
+      allowed = true;
+    }
+  }                     
+  return allowed;
+}
+
+function genButtonLabels() {
+  return ['C',  '',  '<-', '/',
+          '7',  '8',  '9', '*', 
+          '4',  '5',  '6', '-',
+          '1',  '2',  '3', '+',
+          '',   '0',  '.', '='];
+
+}
+
 function onButtonPress(button) {
+
+  // Clear
   if (button == 'C') {
     result = '';
+
+  // Equals
   } else if (button == '=') {
     result = eval(result)
     resultSave = result;
     document.getElementById('bottomDisplay').innerHTML = result;
     result = '';
     return;
+
+  // Backspace
   } else if (button == '<-') {
     result = String(result).substring(0, result.length - 1);
+
+  // Everything else
   } else {
     if (resultSave !== '' && (button == '+' || button == '-' || button == '*' || button == '/')) {
       result = resultSave;
@@ -79,10 +84,12 @@ function onButtonPress(button) {
     }
     result += button;
   }
-  console.log(result);
+
+  // Display the results
   document.getElementById('bottomDisplay').innerHTML = result;
+
+  // Special Cases
   if (result == '') {
     document.getElementById('bottomDisplay').innerHTML = 0;
   }
 }
-

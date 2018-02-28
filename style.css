@@ -23,16 +23,6 @@ div#container {
   box-sizing: border-box;
 }
 
-#topDisplay {
-  margin: 0 auto;
-  padding-right: 10px;
-  width: 300px;
-  box-sizing: border-box;
-  text-align: right;
-  border-bottom: 1px solid black;
-  height: 200px;
-}
-
 #bottomDisplay {
   margin: 0 auto;
   padding-right: 10px;
