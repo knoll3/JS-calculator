@@ -67,9 +67,8 @@ function genButtonLabels() {
 }
 
 function onButtonPress(button) {
-  let opButtonCondition = resultSave !== '' && 
-                         (button == '+' || button == '-' || 
-                          button == '*' || button == '/');  
+  let opButtonCondition = (button == '+' || button == '-' || 
+                           button == '*' || button == '/');  
                          
   // Clear
   if (button == 'C') {
@@ -88,12 +87,17 @@ function onButtonPress(button) {
   } else if (button == '<-') {
     result = String(result).substring(0, result.length - 1);
     resultSave = '';
-
-  // Everything else
-  } else {
-    if (opButtonCondition) {
+    
+  // Operators
+  } else if (opButtonCondition) {
+    if (resultSave !== '') {
       result = resultSave;
     }
+    result += button;
+    resultSave = '';
+    
+  // Everything else
+  } else {
     result += button;
     resultSave = '';
   }
