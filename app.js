@@ -1,15 +1,34 @@
 makeCalculator();
 
-$(document).keypress(function(e) {
-  console.log(e.key);
-  if (e.key == 'Enter') {
-    onButtonPress('=');
-  } else {
-    onButtonPress(e.key);  
+$(document).keydown(function(e) {
+  if (isKeyAllowed(e.key)) {
+    if (e.key == 'Enter') {
+      onButtonPress('=');
+    } else if (e.key == 'Delete') {
+      onButtonPress('C');
+    } else if (e.key == 'Backspace') {
+      onButtonPress('<-');
+    } else {
+      onButtonPress(e.key);  
+    }
   }
 });
 
+
 // Function Definitions //
+
+function isKeyAllowed(key) {
+  var allowed = false;
+  var allowableKeys = ['1', '2', '3', '4', '5', '6', '7',
+                       '8', '9', '0', '.', 'Delete', 'Backspace', 
+                       '/', '*', '-', '+', 'Enter'];
+  for (let i = 0; i < allowableKeys.length; i++) {
+    if (key == allowableKeys[i]) {
+      allowed = true;
+    }
+  }                     
+  return allowed;
+}
 
 function operate(op, n1, n2) {
   return eval(`${n1} ${op} ${n2}`);
