@@ -30,7 +30,7 @@ function makeCalculator() {
     button.addEventListener('click', function() {
       onButtonPress(buttonLabels[i]);
     }); 
-    document.getElementById('bottomDisplay').innerHTML = 0;
+    document.getElementById('calculatorDisplay').innerHTML = 0;
   }
 }
 
@@ -61,18 +61,20 @@ function onButtonPress(button) {
   // Clear
   if (button == 'C') {
     result = '';
+    resultSave = '';
 
   // Equals
   } else if (button == '=') {
     result = eval(result)
     resultSave = result;
-    document.getElementById('bottomDisplay').innerHTML = result;
+    document.getElementById('calculatorDisplay').innerHTML = result;
     result = '';
     return;
 
   // Backspace
   } else if (button == '<-') {
     result = String(result).substring(0, result.length - 1);
+    resultSave = '';
 
   // Everything else
   } else {
@@ -86,10 +88,10 @@ function onButtonPress(button) {
   }
 
   // Display the results
-  document.getElementById('bottomDisplay').innerHTML = result;
+  document.getElementById('calculatorDisplay').innerHTML = result;
 
   // Special Cases
   if (result == '') {
-    document.getElementById('bottomDisplay').innerHTML = 0;
+    document.getElementById('calculatorDisplay').innerHTML = 0;
   }
 }
