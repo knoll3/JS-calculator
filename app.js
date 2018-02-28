@@ -2,6 +2,8 @@
   To do:
     ✓ Pressing enter when result == '' should do nothing.
     ✓ Cannot enter consecutive operators.
+    - Only numbers can follow a decimal.
+    ✓ Operation should not begin with '/' or '*'.
 */
 
 makeCalculator();
@@ -82,7 +84,6 @@ function onButtonPress(button) {
   if (button == 'C') {
     result = '';
     resultSave = '';
-    // resultForDisplay = '';
 
   // Equals
   } else if (button == '=') {
@@ -102,6 +103,10 @@ function onButtonPress(button) {
     
   // Operators
   } else if (isOperator(button)) {
+    let resultForDisplay = document.getElementById('calculatorDisplay').innerHTML;
+    if ((button == '/' || button == '*') && (resultForDisplay == '0' || result == '+' || result == '-')) {
+      button = '';
+    }
     let lastCharOfPrev = result.substring(result.length - 1);
     if (isOperator(lastCharOfPrev)) {
       result = result.replace(/.$/, '');
@@ -112,6 +117,7 @@ function onButtonPress(button) {
     result += button;
     resultSave = '';
     
+    
   // Everything else
   } else {
     result += button;
@@ -119,7 +125,7 @@ function onButtonPress(button) {
   }
 
   // Display the results
-  let resultForDisplay = result.substring(result.length - 20);
+  let resultForDisplay = result.substring(result.length - 22);
   document.getElementById('calculatorDisplay').innerHTML = resultForDisplay;
   console.log(resultForDisplay);
 
