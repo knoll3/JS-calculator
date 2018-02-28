@@ -1,3 +1,9 @@
+/*
+  To do:
+    - Pressing enter will run the last operation on the latest result.
+    - Cannot enter consecutive operators.
+*/
+
 makeCalculator();
 
 $(document).keydown(function(e) {
@@ -61,9 +67,9 @@ function genButtonLabels() {
 }
 
 function onButtonPress(button) {
-  let buttonCondition = resultSave !== '' && 
-                        (button == '+' || button == '-' || 
-                         button == '*' || button == '/');  
+  let opButtonCondition = resultSave !== '' && 
+                         (button == '+' || button == '-' || 
+                          button == '*' || button == '/');  
                          
   // Clear
   if (button == 'C') {
@@ -73,7 +79,6 @@ function onButtonPress(button) {
   // Equals
   } else if (button == '=') {
     result = eval(result)
-    result = sigFigures(result, 12);
     resultSave = result;
     document.getElementById('calculatorDisplay').innerHTML = result;
     result = '';
@@ -86,18 +91,16 @@ function onButtonPress(button) {
 
   // Everything else
   } else {
-    if (buttonCondition) {
+    if (opButtonCondition) {
       result = resultSave;
-      resultSave = '';
-    } else {
-      resultSave = '';
     }
     result += button;
+    resultSave = '';
   }
 
   // Display the results
-  document.getElementById('calculatorDisplay').innerHTML = result;
-  console.log(result.length);
+  let resultForDisplay = result.substring(result.length - 20);
+  document.getElementById('calculatorDisplay').innerHTML = resultForDisplay;
 
   // Special Cases
   if (result == '') {
