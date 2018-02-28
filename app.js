@@ -26,7 +26,7 @@ function makeCalculator() {
     button.setAttribute('class', 'button');
     button.innerHTML = buttonLabels[i];
     button.id = `button_${buttonLabels[i]}`;
-    document.getElementById('container').appendChild(button);
+    document.getElementById('keypad').appendChild(button);
     button.addEventListener('click', function() {
       onButtonPress(buttonLabels[i]);
     }); 
@@ -61,7 +61,10 @@ function genButtonLabels() {
 }
 
 function onButtonPress(button) {
-
+  let buttonCondition = resultSave !== '' && 
+                        (button == '+' || button == '-' || 
+                         button == '*' || button == '/');  
+                         
   // Clear
   if (button == 'C') {
     result = '';
@@ -83,7 +86,7 @@ function onButtonPress(button) {
 
   // Everything else
   } else {
-    if (resultSave !== '' && (button == '+' || button == '-' || button == '*' || button == '/')) {
+    if (buttonCondition) {
       result = resultSave;
       resultSave = '';
     } else {
@@ -94,6 +97,7 @@ function onButtonPress(button) {
 
   // Display the results
   document.getElementById('calculatorDisplay').innerHTML = result;
+  console.log(result.length);
 
   // Special Cases
   if (result == '') {
