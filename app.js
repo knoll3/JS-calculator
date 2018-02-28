@@ -47,6 +47,10 @@ function isKeyAllowed(key) {
   return allowed;
 }
 
+function sigFigures(number, figures) {
+  return Math.round(number * 10 ** figures) / 10 ** figures;
+}
+
 function genButtonLabels() {
   return ['C',  '',  '<-', '/',
           '7',  '8',  '9', '*', 
@@ -66,6 +70,7 @@ function onButtonPress(button) {
   // Equals
   } else if (button == '=') {
     result = eval(result)
+    result = sigFigures(result, 12);
     resultSave = result;
     document.getElementById('calculatorDisplay').innerHTML = result;
     result = '';
