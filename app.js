@@ -1,6 +1,6 @@
 /*
   To do:
-    - Pressing enter will run the last operation on the latest result.
+    ✓ Pressing enter when result == '' should do nothing.
     ✓ Cannot enter consecutive operators.
 */
 
@@ -66,6 +66,11 @@ function genButtonLabels() {
 
 }
 
+function getLastOperation(op) {
+  let lastOp = op.match(/[\+-\/*]\d+$/);
+  return lastOp === null ? '' : lastOp[0];
+}
+
 function onButtonPress(button) {
 
   let isOperator = function(button) {
@@ -77,13 +82,17 @@ function onButtonPress(button) {
   if (button == 'C') {
     result = '';
     resultSave = '';
+    // resultForDisplay = '';
 
   // Equals
   } else if (button == '=') {
-    result = eval(result)
-    resultSave = result;
-    document.getElementById('calculatorDisplay').innerHTML = result;
-    result = '';
+    if (result !== '') {
+      result = eval(result)
+      resultSave = result;
+      document.getElementById('calculatorDisplay').innerHTML = result;
+      console.log(result);
+      result = '';
+    }
     return;
 
   // Backspace
@@ -93,7 +102,6 @@ function onButtonPress(button) {
     
   // Operators
   } else if (isOperator(button)) {
-    console.log("it's an operator");
     let lastCharOfPrev = result.substring(result.length - 1);
     if (isOperator(lastCharOfPrev)) {
       result = result.replace(/.$/, '');
@@ -113,6 +121,7 @@ function onButtonPress(button) {
   // Display the results
   let resultForDisplay = result.substring(result.length - 20);
   document.getElementById('calculatorDisplay').innerHTML = resultForDisplay;
+  console.log(resultForDisplay);
 
   // Special Cases
   if (result == '') {
