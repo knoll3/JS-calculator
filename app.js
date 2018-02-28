@@ -1,5 +1,14 @@
 makeCalculator();
 
+$(document).keypress(function(e) {
+  console.log(e.key);
+  if (e.key == 'Enter') {
+    onButtonPress('=');
+  } else {
+    onButtonPress(e.key);  
+  }
+});
+
 // Function Definitions //
 
 function operate(op, n1, n2) {
