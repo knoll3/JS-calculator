@@ -81,5 +81,8 @@ function onButtonPress(button) {
   }
   console.log(result);
   document.getElementById('bottomDisplay').innerHTML = result;
+  if (result == '') {
+    document.getElementById('bottomDisplay').innerHTML = 0;
+  }
 }
 
