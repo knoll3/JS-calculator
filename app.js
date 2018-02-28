@@ -1,7 +1,7 @@
 /*
   To do:
     - Pressing enter will run the last operation on the latest result.
-    - Cannot enter consecutive operators.
+    ✓ Cannot enter consecutive operators.
 */
 
 makeCalculator();
@@ -67,9 +67,12 @@ function genButtonLabels() {
 }
 
 function onButtonPress(button) {
-  let opButtonCondition = (button == '+' || button == '-' || 
-                           button == '*' || button == '/');  
-                         
+
+  let isOperator = function(button) {
+    return (button == '+' || button == '-' || 
+            button == '*' || button == '/'); 
+  }
+  
   // Clear
   if (button == 'C') {
     result = '';
@@ -89,7 +92,12 @@ function onButtonPress(button) {
     resultSave = '';
     
   // Operators
-  } else if (opButtonCondition) {
+  } else if (isOperator(button)) {
+    console.log("it's an operator");
+    let lastCharOfPrev = result.substring(result.length - 1);
+    if (isOperator(lastCharOfPrev)) {
+      result = result.replace(/.$/, '');
+    }
     if (resultSave !== '') {
       result = resultSave;
     }
